@@ -1,15 +1,39 @@
-<script setup lang="ts">
+<script lang="ts">
 import { RouterView } from 'vue-router';
-// import VerticalSidebarVue from './vertical-sidebar/VerticalSidebar.vue';
-// import VerticalHeaderVue from './vertical-header/VerticalHeader.vue';
 import MainView from './Main.vue';
+import { mapActions, mapGetters } from 'vuex';
+import axiosInstance from '@/store/axiosInstance';
+import Config from '@/store/config';
+
+export default {
+  components: {
+    MainView,
+    RouterView
+  },
+  computed: {
+    ...mapGetters(['getInfoUser', 'isLoggedIn'])
+  },
+  methods: {
+    ...mapActions(['setupInfoUser', 'setLoginStatus']),
+    async fetchUser() {
+        try {
+            const response = await axiosInstance.post(Config.API_ENDPOINT+'/info');
+            this.setupInfoUser(response.data);
+            this.setLoginStatus(true);
+        } catch (error) {
+
+        }
+    },
+  },
+  mounted() {
+    this.fetchUser();
+  }
+}
 </script>
 
 <template>
-    <v-locale-provider >
+    <v-locale-provider v-if="isLoggedIn" >
         <v-app>
-            <!-- <VerticalSidebarVue />
-            <VerticalHeaderVue  /> -->
             <MainView />
             <v-main>
                 <v-container fluid class="page-wrapper">
