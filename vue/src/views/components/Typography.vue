@@ -92,8 +92,8 @@
       </v-icon>
       <v-icon size="small" @click="deleteItem(item)"> mdi-delete </v-icon>
     </template>
-    <template v-slot:no-data>
-      <v-btn color="primary" @click="initialize"> Reset </v-btn>
+    <template v-slot:item.name="{ item }">
+      <b v-html="render(item.level)"></b> {{ item.name }}
     </template>
   </v-data-table>
 </template>
@@ -126,8 +126,8 @@ export default {
   }),
 
   computed: {
-    formTitle() {
-      return this.editedIndex === -1 ? 'New Item' : 'Edit Item'
+    formLevel(level) {
+      return level
     },
   },
 
@@ -145,6 +145,18 @@ export default {
   },
 
   methods: {
+    render(level) {
+      let result = '';
+      if (level>0) {
+        for (let i = 0; i < level; i++) {
+          result += ' - ';
+        }
+        return ' '+result+' ';
+      } else {
+        return '';
+      }
+    },
+
     async initialize() {
       const response = await axiosInstance.get(Config.API_ENDPOINT+'/category');
       this.desserts = response.data;
