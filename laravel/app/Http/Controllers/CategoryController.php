@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -12,7 +13,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        Log::info("index");
     }
 
     /**
@@ -20,7 +21,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        Log::info("create");
     }
 
     /**
@@ -28,7 +29,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Category::create($request->all());
+        return $request->all();
     }
 
     /**
@@ -36,7 +38,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        Log::info("show");
     }
 
     /**
@@ -44,7 +46,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        Log::info("edit");
     }
 
     /**
@@ -52,7 +54,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        Log::info("update");
     }
 
     /**
@@ -60,6 +62,6 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        Log::info("destroy");
     }
 }

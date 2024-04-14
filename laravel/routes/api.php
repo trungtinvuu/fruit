@@ -23,9 +23,9 @@ use App\Http\Controllers\UserController;
 // });
 
 Route::post('/login', [UserController::class, 'login'])->middleware('validate.user');
-Route::group(['middleware' => ['jwt.verify']], function() {
+// Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/info', [UserController::class, 'info']);
-    Route::apiResource('categories', CategoryController::class);
-    Route::apiResource('products', ProductController::class);
-    Route::apiResource('invoices', InvoiceController::class);
-});
+    Route::apiResource('category', CategoryController::class);
+    Route::apiResource('product', ProductController::class);
+    Route::apiResource('invoice', InvoiceController::class);
+// });
