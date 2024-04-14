@@ -21,11 +21,14 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::orderByDesc('root_id')
-                        ->orderBy('parent_id')
-                        ->orderBy('level')
-                        ->get();
-        return $categories;
+        // $categories = Category::orderByDesc('root_id')
+        //                 ->orderBy('parent_id')
+        //                 ->orderBy('level')
+        //                 ->get();
+        // return $categories;
+        $array = [1, 2, 3, 4, 5];
+        customHelperFunction($array);
+        return $array;
     }
 
     /**
