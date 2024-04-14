@@ -6,9 +6,11 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\CategoryRepository;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CategoryController extends Controller
 {
+    use SoftDeletes;
     protected $categoryRepository;
 
     public function __construct(CategoryRepository $categoryRepository)
@@ -81,5 +83,6 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         Log::info("destroy");
+        $category->delete();
     }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->unsignedBigInteger('level')->nullable()->default(0);
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }

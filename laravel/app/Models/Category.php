@@ -17,6 +17,18 @@ class Category extends Model
         'level',
     ];
 
+    protected static function booted()
+    {
+        static::deleting(function ($category) {
+            $category->childs()->delete();
+        });
+    }
+
+    public function childs()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('Y/m/d \a\t g:i a');
