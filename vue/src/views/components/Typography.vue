@@ -1,5 +1,5 @@
 <template>
-  <v-card-title class="d-flex align-center pe-2">
+  <v-card-title class="d-flex align-center pa-0 pb-2">
     <v-icon icon="mdi-video-input-component"></v-icon> &nbsp;
     New category
 
@@ -22,17 +22,18 @@
     :sort-by="[{ key: 'calories', order: 'asc' }]"
     :search="search"
     show-select
+    class="custom-table"
   >
     <template v-slot:top>
       <v-toolbar flat>
-        <v-toolbar-title>My CRUD</v-toolbar-title>
+        <v-toolbar-title class="ml-0">List Category</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <v-spacer></v-spacer>
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ props }">
             <v-btn
               v-if="selected.length === 0"
-              class="text-none"
+              class="text-none mr-0"
               color="medium-emphasis"
               variant="outlined"
               rounded
@@ -41,6 +42,7 @@
             </v-btn>
             <v-btn
               v-else
+              class="text-none mr-0"
               color="primary"
               variant="flat"
               @click="deleteAll()"
@@ -199,3 +201,23 @@ export default {
   },
 }
 </script>
+
+<style >
+.custom-table table{
+  border: 1px solid #eee;
+}
+.custom-table header{
+  background: #fff;
+}
+.custom-table .v-data-table-footer {
+  padding: 10px 0px;
+  border: 1px #eee solid;
+  border-top: 0;
+}
+.custom-table .v-data-table__tr:nth-child(odd) {
+  background: #eee;
+}
+.custom-table .v-data-table__tr:nth-child(even) {
+  background: #fff;
+}
+</style>
