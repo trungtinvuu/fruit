@@ -13,7 +13,7 @@ const MainRoutes = {
         },
         {
             name: 'Typography',
-            path: '/ui/typography',
+            path: '/category',
             component: () => import('@/views/components/Typography.vue')
         },
         {
