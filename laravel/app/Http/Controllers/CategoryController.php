@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Repositories\CategoryRepository;
 
 class CategoryController extends Controller
 {
+    protected $categoryRepository;
+
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -29,8 +37,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create($request->all());
-        return $request->all();
+        $level = $this->categoryRepository->getLevel($request->parent_id);
+        $data = Category::create([
+            'name' => $request->name,
+            'parent_id' => $request->parent_id,
+            'level' => $level,
+        ]);
+        return $data;
     }
 
     /**
