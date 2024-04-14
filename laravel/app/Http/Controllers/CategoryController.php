@@ -21,7 +21,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        Log::info("index");
+        $categories = Category::orderByDesc('root_id')
+                        ->orderBy('parent_id')
+                        ->orderBy('level')
+                        ->get();
+        return $categories;
     }
 
     /**
