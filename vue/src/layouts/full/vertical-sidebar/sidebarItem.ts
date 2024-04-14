@@ -30,7 +30,7 @@ const sidebarItem: menu[] = [
     {
         title: 'Fruit Category',
         icon: TypographyIcon,
-        to: '/ui/typography'
+        to: '/category'
     },
     {
         title: 'Fruit Item',

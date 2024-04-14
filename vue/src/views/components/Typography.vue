@@ -1,7 +1,7 @@
 <template>
   <v-card-title class="d-flex align-center pe-2">
     <v-icon icon="mdi-video-input-component"></v-icon> &nbsp;
-    Find a Graphics Card
+    New category
 
     <v-spacer></v-spacer>
 
