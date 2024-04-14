@@ -21,14 +21,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        // $categories = Category::orderByDesc('root_id')
-        //                 ->orderBy('parent_id')
-        //                 ->orderBy('level')
-        //                 ->get();
-        // return $categories;
-        $array = [1, 2, 3, 4, 5];
-        customHelperFunction($array);
-        return $array;
+        $idArray = idCategoryList();
+        $value = implode(",",$idArray);
+        $categories = Category::whereIn('id', $idArray)
+                        ->orderByRaw("FIELD(id, $value)")
+                        ->get();
+        return $categories;
     }
 
     /**
