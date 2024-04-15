@@ -14,7 +14,14 @@ const MainRoutes = {
         {
             name: 'Typography',
             path: '/category',
-            component: () => import('@/views/components/Typography.vue')
+            component: () => import('@/views/components/Typography.vue'),
+            children: [
+                {
+                    name: 'CategoryAdd',
+                    path: '/add',
+                    component: () => import('@/views/components/Shadow.vue')
+                },
+            ]
         },
         {
             name: 'Shadow',
