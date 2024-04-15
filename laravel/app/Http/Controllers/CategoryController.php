@@ -54,12 +54,25 @@ class CategoryController extends Controller
         return $data;
     }
 
+    public function categoryDetail( $id )
+    {
+        $array = [];
+        categoryChild($array,intval($id));
+        $idArray = idCategoryList();
+        $result = array_diff($idArray, $array);
+        $value = implode(",",$result);
+        $categories = Category::whereIn('id', $result)
+                        ->orderByRaw("FIELD(id, $value)")
+                        ->get();
+        return $categories;
+    }
+
     /**
      * Display the specified resource.
      */
     public function show(Category $category)
     {
-        Log::info("show");
+        return response()->json($category);
     }
 
     /**
