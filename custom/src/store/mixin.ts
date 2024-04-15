@@ -1,11 +1,11 @@
 export const myMixin = {
   data() {
     return {
-      myData: 'Hello from mixin'
+
     };
   },
   created() {
-    console.log('Mixin created');
+
   },
   methods: {
     render(level: number) {

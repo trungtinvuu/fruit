@@ -1,15 +1,12 @@
 html {
     overflow-y: auto;
 }
-// .v-navigation-drawer{
-//      left: 270px !important;
-//     top: 0 !important;
-// }
-// .appbar
-// {
-//     left: 270px !important;
-//     width: calc((100% - 270px) - 0px) !important;
-// }
+.custom-breadcrumb{
+    padding-left: 0;
+    margin-left: -5px;
+    margin-bottom: 15px;
+    border-bottom: 1px #eee dashed;
+}
 .v-main {
     margin-right: 20px;
 }
