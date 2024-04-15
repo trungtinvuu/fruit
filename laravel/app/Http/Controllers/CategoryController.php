@@ -88,8 +88,20 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        Log::info($category);
-        Log::info($request->all());
+        if(is_null($request->parent_id)){
+            Log::info($category->id);
+            $category->name = $request->name;
+            $category->root_id = $category->id;
+            $category->parent_id = $request->parent_id;
+            $category->level = 0;
+        }else{
+            $parent = Category::find($request->parent_id);
+            $category->name = $request->name;
+            $category->root_id = $parent->root_id;
+            $category->parent_id = $request->parent_id;
+            $category->level = $parent->level + 1;
+        }
+        $category->save();
     }
 
     /**
