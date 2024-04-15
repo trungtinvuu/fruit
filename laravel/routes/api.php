@@ -28,4 +28,5 @@ Route::post('/login', [UserController::class, 'login'])->middleware('validate.us
     Route::apiResource('category', CategoryController::class);
     Route::apiResource('product', ProductController::class);
     Route::apiResource('invoice', InvoiceController::class);
+    Route::post('/categoryDeleteAll', [CategoryController::class, 'delete']);
 // });

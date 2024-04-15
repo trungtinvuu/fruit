@@ -175,7 +175,14 @@ export default {
     },
 
     deleteItemConfirm() {
-      this.desserts.splice(this.editedIndex, 1)
+      axiosInstance.delete(Config.API_ENDPOINT + '/category/' + this.editedItem.id)
+      .then(response => {
+        this.initialize();
+      })
+      .catch(error => {
+        console.error('Error deleting category:', error);
+      });
+      // this.desserts.splice(this.editedIndex, 1)
       this.closeDelete()
     },
 
@@ -196,6 +203,17 @@ export default {
     },
 
     save() {
+      const data = {
+        "list" : this.selected
+      };
+
+      axiosInstance.post(Config.API_ENDPOINT + '/categoryDeleteAll/' , data)
+        .then(response => {
+          this.initialize();
+        })
+        .catch(error => {
+          console.error('Error deleting category:', error);
+        });
       this.close()
     },
   },
