@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Jobs\CategoryDelete;
 
 class CategoryController extends Controller
 {
@@ -82,14 +83,14 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        CategoryDelete::dispatch($category->id);
     }
 
     public function delete(Request $request)
     {
         $list = $request->list;
         foreach ($list as $id) {
-            Category::destroy($id);
+            CategoryDelete::dispatch($id);
         }
     }
 }
