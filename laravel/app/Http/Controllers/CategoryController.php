@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use App\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Jobs\CategoryDelete;
+use App\Jobs\CategoryReset;
 
 class CategoryController extends Controller
 {
@@ -89,7 +90,6 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         if(is_null($request->parent_id)){
-            Log::info($category->id);
             $category->name = $request->name;
             $category->root_id = $category->id;
             $category->parent_id = $request->parent_id;
@@ -97,11 +97,12 @@ class CategoryController extends Controller
         }else{
             $parent = Category::find($request->parent_id);
             $category->name = $request->name;
-            $category->root_id = $parent->root_id;
             $category->parent_id = $request->parent_id;
+            $category->root_id = $parent->root_id;
             $category->level = $parent->level + 1;
         }
         $category->save();
+        CategoryReset::dispatch($category->id);
     }
 
     /**

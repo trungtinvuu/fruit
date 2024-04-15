@@ -68,6 +68,17 @@ export default {
         };
     },
     methods: {
+        fetchCategory() {
+            axiosInstance.get(Config.API_ENDPOINT + '/category/' + this.id)
+                .then(response => {
+                    this.category = response.data;
+                    this.textInput = this.category.name;
+                    this.breadcrumbs = ['Category', 'Edit', this.category.name];
+                })
+                .catch(error => {
+                    console.error('Error deleting category:', error);
+                });
+        },
         fetchData() {
             axiosInstance.get(Config.API_ENDPOINT + '/categoryDetail/' + this.id)
             .then(response => {
@@ -93,11 +104,9 @@ export default {
                 console.log(data);
                 axiosInstance.put(Config.API_ENDPOINT + '/category/' + this.id, data)
                     .then(response => {
-                        console.log(response);
-                        // this.textInput = [];
-                        // this.selectedItem = null;
-                        // this.fetchData();
-                        // this.showSuccessSnackbar = true;
+                        this.fetchCategory();
+                        this.fetchData();
+                        this.showSuccessSnackbar = true;
                     })
                     .catch(error => {
                         console.error('Error deleting category:', error);
@@ -107,15 +116,7 @@ export default {
     },
     created() {
         this.id = this.$route.params.id;
-        axiosInstance.get(Config.API_ENDPOINT + '/category/' + this.id)
-            .then(response => {
-                this.category = response.data;
-                this.textInput = this.category.name;
-                this.breadcrumbs = ['Category', 'Edit', this.category.name];
-            })
-            .catch(error => {
-                console.error('Error deleting category:', error);
-            });
+        this.fetchCategory();
         this.fetchData();
     },
     computed: {
