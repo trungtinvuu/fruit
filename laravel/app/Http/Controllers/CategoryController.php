@@ -88,7 +88,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        Log::info("update");
+        Log::info($category);
+        Log::info($request->all());
     }
 
     /**
