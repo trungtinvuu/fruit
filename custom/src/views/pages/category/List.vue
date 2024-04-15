@@ -1,8 +1,14 @@
 <template>
     <v-card-title class="d-flex align-center pa-0 pb-2">
-      <v-icon icon="mdi-video-input-component"></v-icon> &nbsp;
-      New category
-  
+      <router-link to="/category/add" class="add-category" color="white" >
+        <v-btn
+          class="text-none text-subtitle-1"
+          color="primary"
+          variant="flat"
+        >
+          <v-icon>mdi-plus</v-icon> New category
+        </v-btn>
+      </router-link>
       <v-spacer></v-spacer>
   
       <v-text-field
@@ -151,17 +157,6 @@ export default {
   },
 
   methods: {
-    // render(level) {
-    //   let result = '';
-    //   if (level>0) {
-    //     for (let i = 0; i < level; i++) {
-    //       result += ' - ';
-    //     }
-    //     return ' '+result+' ';
-    //   } else {
-    //     return '';
-    //   }
-    // },
 
     async initialize() {
       const response = await axiosInstance.get(Config.API_ENDPOINT+'/category');
@@ -241,5 +236,8 @@ export default {
 }
 .custom-table .v-data-table__tr:nth-child(even) {
   background: #fff;
+}
+.add-category{
+  text-decoration: none;
 }
 </style>
