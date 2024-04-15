@@ -36,7 +36,7 @@
                     ></v-select>
                 </v-col>
                 <v-col cols="12" >
-                    <v-btn type="submit" color="primary">Add category</v-btn>
+                    <v-btn type="submit" color="primary">Edit category</v-btn>
                 </v-col>
             </v-row>
         </v-form>

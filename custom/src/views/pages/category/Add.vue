@@ -8,7 +8,7 @@
                         <strong>Caterogy name</strong>
                     </div>
                     <br>
-                    <v-text-field 
+                    <v-text-field
                         v-model="textInput"
                         required
                         :rules="textInputRules"

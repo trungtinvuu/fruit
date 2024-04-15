@@ -7,8 +7,8 @@ if (!function_exists('resetCategory')) {
     function resetCategory($id)
     {
         $category = DB::table('categories')
-                        ->where('id',$id)
-                        ->get();
+                    ->where('id', $id)
+                    ->first();
 
         $rows = DB::table('categories')
                     ->where('parent_id',$id)
