@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('unit');
             $table->decimal('price', 10, 2);
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }

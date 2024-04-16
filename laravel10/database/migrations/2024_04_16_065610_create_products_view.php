@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::getConnection()->statement("DROP VIEW IF EXISTS products_view");
         Schema::getConnection()->statement("
             CREATE VIEW products_view AS
             SELECT products.*, categories.name AS category
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::getConnection()->statement("DROP VIEW IF EXISTS products_view");
+
     }
 };

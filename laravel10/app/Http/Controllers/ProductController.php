@@ -16,8 +16,9 @@ class ProductController extends Controller
     public function index()
     {
         $products = DB::table('products_view')
-                    ->orderBy('id', 'desc')
-                    ->get();
+                        ->whereNull('deleted_at')
+                        ->orderBy('id', 'desc')
+                        ->get();
         return response()->json($products);
     }
 

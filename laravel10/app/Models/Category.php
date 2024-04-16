@@ -21,9 +21,9 @@ class Category extends Model
 
     protected static function booted()
     {
-        static::deleting(function ($category) {
-            $category->childs()->delete();
-        });
+        // static::deleting(function ($category) {
+        //     $category->childs()->delete();
+        // });
     }
 
     public function childs()

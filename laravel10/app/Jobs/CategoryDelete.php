@@ -31,6 +31,7 @@ class CategoryDelete implements ShouldQueue
         foreach ($array as $value) {
             $category = Category::find($value);
             if ($category) {
+                $category->products()->delete();
                 $category->delete();
             }
         }

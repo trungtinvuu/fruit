@@ -25,6 +25,7 @@ class ResetAndClear extends Command
      */
     public function handle()
     {
+        $this->call('storage:link');
         $this->call('migrate:fresh');
         $this->call('db:seed');
         $this->call('cache:clear');
