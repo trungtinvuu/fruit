@@ -115,7 +115,8 @@ export default {
         fetchData() {
             this.productInfo(this.id)
                 .then(response => {
-                    this.product = response.data
+                    console.log(response.data);
+                    this.product = response.data;
                     this.textInput = this.product.name;
                     this.unitInput = this.product.unit;
                     this.priceInput = this.product.price;

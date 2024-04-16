@@ -24,7 +24,7 @@
     <v-data-table
       v-model="selected"
       :headers="headers"
-      :items="desserts"
+      :items="categories"
       :sort-by="[{ key: 'calories', order: 'asc' }]"
       :search="search"
       show-select
@@ -125,7 +125,7 @@ export default {
       { title: 'Date', key: 'created_at' },
       { title: 'Actions', key: 'actions', sortable: false },
     ],
-    desserts: [],
+    categories: [],
     editedIndex: -1,
     editedItem: {
       name: '',
@@ -160,7 +160,7 @@ export default {
 
     async initialize() {
       const response = await axiosInstance.get(Config.API_ENDPOINT+'/category');
-      this.desserts = response.data;
+      this.categories = response.data;
     },
 
     deleteAll() {
@@ -168,7 +168,7 @@ export default {
     },
 
     deleteItem(item) {
-      this.editedIndex = this.desserts.indexOf(item)
+      this.editedIndex = this.categories.indexOf(item)
       this.editedItem = Object.assign({}, item)
       this.dialogDelete = true
     },
@@ -181,7 +181,7 @@ export default {
       .catch(error => {
         console.error('Error deleting category:', error);
       });
-      // this.desserts.splice(this.editedIndex, 1)
+
       this.closeDelete()
     },
 

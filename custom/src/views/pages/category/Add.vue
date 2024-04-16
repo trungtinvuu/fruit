@@ -66,15 +66,14 @@ export default {
     },
     methods: {
         fetchData() {
-            axiosInstance.get(Config.API_ENDPOINT + '/category')
-            .then(response => {
-                let data = response.data
-                this.options = this.options.slice(0, 1).concat(data);
-                
-            })
-            .catch(error => {
-                console.error('Error deleting category:', error);
-            });
+            this.categoryList()
+                .then(response => {
+                    let data = response.data;
+                    this.options = this.options.slice(0, 1).concat(data);
+                })
+                .catch(error => {
+                    console.log(error)
+                });
         },
         async submitForm() {
             const { valid } = await this.$refs.form.validate();

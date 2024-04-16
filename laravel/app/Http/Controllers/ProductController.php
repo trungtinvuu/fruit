@@ -29,8 +29,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Product::create($request->all());
-        return $data;
+        $validatedData = $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'unit' => 'required|string|max:255',
+            'price' => 'required|numeric',
+        ]);
+
+        $product = Product::create($validatedData);
+
+        return response()->json($product);
     }
 
     /**
@@ -38,7 +46,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return $product;
+        return response()->json($product);
     }
 
     /**
@@ -54,7 +62,15 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $product->update($request->all());
+        $validatedData = $request->validate([
+            'category_id' => 'required|exists:categories,id',
+            'name' => 'required|string|max:255',
+            'unit' => 'required|string|max:255',
+            'price' => 'required|numeric',
+        ]);
+
+        $product->update($validatedData);
+
         return response()->json($product);
     }
 
