@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container v-if="load">
         <v-breadcrumbs :items="breadcrumbs" class="custom-breadcrumb" color="primary"></v-breadcrumbs>
         <v-form @submit.prevent="submitForm" ref="form">
             <v-row>
@@ -85,6 +85,7 @@
             :timeout="1000"
         ><b>Edit successfully!</b></v-snackbar>
     </v-container>
+    <Error404  v-else />
 </template>
 
 <script>
@@ -93,8 +94,12 @@ import { myMixin } from '@/store/mixin';
 import axiosInstance from '@/store/axiosInstance';
 import Config from '@/store/config';
 import { ValidationRules } from '@/store/utils';
+import Error404 from '@/views/pages/Error404.vue';
 
 export default {
+    components: {
+        Error404
+    },
     mixins: [myMixin],
     data() {
         return {
@@ -108,7 +113,8 @@ export default {
             rulePrice: [],
             id : null,
             product : {},
-            breadcrumbs: []
+            breadcrumbs: [],
+            load: true
         };
     },
     methods: {
@@ -123,7 +129,9 @@ export default {
                     this.breadcrumbs = ['Product', 'Edit', this.product.name];
                 })
                 .catch(error => {
-                    console.log(error)
+                    if(error.response.status===404){
+                        this.load = !this.load
+                    }
                 });
             
             this.categoryList()

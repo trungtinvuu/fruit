@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container v-if="load">
         <v-breadcrumbs :items="breadcrumbs" class="custom-breadcrumb" color="primary"></v-breadcrumbs>
         <v-form @submit.prevent="submitForm" ref="form">
             <v-row>
@@ -46,6 +46,7 @@
             :timeout="1000"
         ><b>Edit successfully!</b></v-snackbar>
     </v-container>
+    <Error404  v-else />
 </template>
 
 <script>
@@ -54,8 +55,12 @@ import { myMixin } from '@/store/mixin';
 import axiosInstance from '@/store/axiosInstance';
 import Config from '@/store/config';
 import { ValidationRules } from '@/store/utils';
+import Error404 from '@/views/pages/Error404.vue';
 
 export default {
+    components: {
+        Error404
+    },
     mixins: [myMixin],
     data() {
         return {
@@ -66,20 +71,22 @@ export default {
             showSuccessSnackbar: false,
             options: [{ name: 'Root category', id: null }],
             textInputRules: [],
-            breadcrumbs: []
+            breadcrumbs: [],
+            load: true
         };
     },
     methods: {
         fetchCategory() {
-            axiosInstance.get(Config.API_ENDPOINT + '/category/' + this.id)
+            this.categoryInfo(this.id)
                 .then(response => {
-                    console.log(response.data);
                     this.category = response.data;
                     this.textInput = this.category.name;
                     this.breadcrumbs = ['Category', 'Edit', this.category.name];
                 })
                 .catch(error => {
-                    console.error('Error deleting category:', error);
+                    if(error.response.status===404){
+                        this.load = !this.load
+                    }
                 });
         },
         fetchData() {

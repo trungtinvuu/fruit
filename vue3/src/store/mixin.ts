@@ -34,6 +34,18 @@ export const myMixin = {
           });
       });
     },
+    categoryInfo(id : any) {
+      return new Promise((resolve, reject) => {
+        const url = Config.API_ENDPOINT+'/category/'+id;
+        axiosInstance.get(url)
+          .then(response => {
+            resolve(response);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    },
     productList(){
       return new Promise((resolve, reject) => {
         const url = Config.API_ENDPOINT+'/product';
