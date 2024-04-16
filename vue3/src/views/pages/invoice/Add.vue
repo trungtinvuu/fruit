@@ -58,7 +58,12 @@
                             <td>{{ item.unit }}</td>
                             <td>{{ item.price }}</td>
                             <td>
-                                <input class="quantity" type="number" min="1" value="1" />
+                                <input 
+                                    v-model="item.quantity"
+                                    class="quantity"
+                                    type="number" 
+                                    min="1"
+                                />
                             </td>
                           </tr>
                         </tbody>
@@ -66,10 +71,6 @@
                 </v-col>
             </v-row>
             <v-row>
-                <v-number-input
-                    control-variant="default"
-                    reverse
-                ></v-number-input>
                 <v-col cols="12" >
                     <v-btn type="submit" color="primary">Add invoice</v-btn>
                 </v-col>
@@ -111,10 +112,17 @@ export default {
                 subtitle: item.unit + " - " + item.price,
             }
         },
+        updateQuantity(event, index) {
+            this.select[index].quantity = parseInt(event.target.value);
+        },
         async submitForm() {
             const { valid } = await this.$refs.form.validate();
-            if(valid){  
-                alert("ok");
+            if(valid){
+                const data = {
+                    customer_name : this.textInput.trim(),
+                    products : this.select,
+                };
+                console.log(data);
             }
         }
     },
@@ -122,7 +130,14 @@ export default {
         this.ruleText = ValidationRules.textRule();
         this.productList()
                 .then(response => {
-                    this.fruits = response.data;
+                    const data = response.data;
+                    this.fruits = data.map(item => ({
+                        id: item.id,
+                        name: item.name,
+                        unit: item.unit,
+                        price: item.price,
+                        quantity: 1
+                    }));
                 })
                 .catch(error => {
                     console.log(error)
