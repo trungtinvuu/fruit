@@ -34,5 +34,17 @@ export const myMixin = {
           });
       });
     },
+    productInfo(id) {
+      return new Promise((resolve, reject) => {
+        const url = Config.API_ENDPOINT+'/product/'+id;
+        axiosInstance.get(url)
+          .then(response => {
+            resolve(response);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    },
   }
 };

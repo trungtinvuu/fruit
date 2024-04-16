@@ -75,7 +75,7 @@
             </v-row>
             <v-row>
                 <v-col cols="12" >
-                    <v-btn type="submit" color="primary">Add category</v-btn>
+                    <v-btn type="submit" color="primary">Add product</v-btn>
                 </v-col>
             </v-row>
         </v-form>
@@ -118,10 +118,26 @@ export default {
                     console.log(error)
                 });
         },
+        createProduct(data) {
+            axiosInstance.post(Config.API_ENDPOINT + '/product' , data)
+                    .then(response => {
+                        this.showSuccessSnackbar = true;
+                        this.$refs.form.reset();
+                    })
+                    .catch(error => {
+                        console.error('Error deleting category:', error);
+                    });
+        },
         async submitForm() {
             const { valid } = await this.$refs.form.validate();
             if(valid){
-                alert("ok");
+                const data = {
+                    category_id : this.selectedItem,
+                    name : this.textInput.trim(),
+                    unit: this.unitInput,
+                    price: this.priceInput
+                }
+                this.createProduct(data);
             }
         }
     },
@@ -129,13 +145,6 @@ export default {
         this.ruleText = ValidationRules.textRule();
         this.rulePrice = ValidationRules.priceRule();
         this.fetchData();
-    },
-    computed: {
-        textInputRules() {
-            return [
-                value => !!value.trim() || 'Name is required',
-            ];
-        }
     }
 };
 </script>
