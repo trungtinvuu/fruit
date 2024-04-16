@@ -143,6 +143,7 @@ export default {
             axiosInstance.put(Config.API_ENDPOINT + '/product/' + this.id, data)
                     .then(response => {
                         this.showSuccessSnackbar = true;
+                        this.fetchData();
                     })
                     .catch(error => {
                         console.error('Error deleting category:', error);
