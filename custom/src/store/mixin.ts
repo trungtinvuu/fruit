@@ -1,3 +1,6 @@
+import axiosInstance from './axiosInstance';
+import Config from './config';
+
 export const myMixin = {
   data() {
     return {
@@ -18,6 +21,18 @@ export const myMixin = {
       } else {
         return '';
       }
+    },
+    categoryList() {
+      return new Promise((resolve, reject) => {
+        const url = Config.API_ENDPOINT+'/category';
+        axiosInstance.get(url)
+          .then(response => {
+            resolve(response);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
     },
   }
 };
