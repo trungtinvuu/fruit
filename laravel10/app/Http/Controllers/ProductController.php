@@ -37,8 +37,8 @@ class ProductController extends Controller
     {
         $validatedData = $request->validate([
             'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'unit' => 'required|string|max:255',
+            'name' => 'required|string',
+            'unit' => 'required|string',
             'price' => 'required|numeric',
         ]);
 

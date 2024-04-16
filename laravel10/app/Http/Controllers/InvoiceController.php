@@ -4,9 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use App\Repositories\InvoiceRepository;
+use App\Models\Product;
 
 class InvoiceController extends Controller
 {
+    protected $invoiceRepository;
+
+    public function __construct(InvoiceRepository $invoiceRepository)
+    {
+        $this->invoiceRepository = $invoiceRepository;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +37,16 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'customer_name' => 'required|string',
+        ]);
+
+        $invoice = Invoice::create($validatedData);
+        $product = Product::find(1);
+
+        $this->invoiceRepository->attachProduct($invoice,$product);
+
+        return response()->json($invoice);
     }
 
     /**
