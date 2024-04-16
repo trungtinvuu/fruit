@@ -6,6 +6,7 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -14,7 +15,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = DB::table('products_view')
+                    ->orderBy('id', 'desc')
+                    ->get();
+        return response()->json($products);
     }
 
     /**
@@ -80,6 +84,12 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+    }
+
+    public function delete(Request $request)
+    {
+        $list = $request->list;
+        Product::destroy($list);
     }
 }
