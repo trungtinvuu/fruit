@@ -53,6 +53,7 @@ import { ref } from 'vue';
 import { myMixin } from '@/store/mixin';
 import axiosInstance from '@/store/axiosInstance';
 import Config from '@/store/config';
+import { ValidationRules } from '@/store/utils';
 
 export default {
     mixins: [myMixin],
@@ -62,6 +63,7 @@ export default {
             selectedItem: null,
             showSuccessSnackbar: false,
             options: [{ name: 'Root category', id: null }],
+            textInputRules: [],
         };
     },
     methods: {
@@ -84,8 +86,7 @@ export default {
                 };
                 axiosInstance.post(Config.API_ENDPOINT + '/category' , data)
                     .then(response => {
-                        this.textInput = [];
-                        this.selectedItem = null;
+                        this.$refs.form.reset();
                         this.fetchData();
                         this.showSuccessSnackbar = true;
                     })
@@ -96,14 +97,8 @@ export default {
         }
     },
     created() {
+        this.textInputRules = ValidationRules.textRule();
         this.fetchData();
-    },
-    computed: {
-        textInputRules() {
-            return [
-                value => !!value.trim() || 'Name is required',
-            ];
-        }
     }
 };
 </script>

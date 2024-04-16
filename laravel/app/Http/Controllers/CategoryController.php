@@ -9,6 +9,8 @@ use App\Repositories\CategoryRepository;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Jobs\CategoryDelete;
 use App\Jobs\CategoryReset;
+use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -38,7 +40,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        Log::info("create");
+
     }
 
     /**
@@ -46,6 +48,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'parent_id' => 'nullable|exists:categories,id',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
         $level = $this->categoryRepository->getLevel($request->parent_id);
         $data = Category::create([
             'name' => $request->name,
@@ -73,7 +84,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return response()->json($category);
+        return response()->json(new CategoryResource($category));
     }
 
     /**
@@ -81,7 +92,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        Log::info("edit");
+
     }
 
     /**
@@ -89,6 +100,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'parent_id' => 'nullable|exists:categories,id',
+        ]);
+        
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
         if(is_null($request->parent_id)){
             $category->name = $request->name;
             $category->root_id = $category->id;

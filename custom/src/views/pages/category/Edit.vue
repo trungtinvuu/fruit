@@ -53,6 +53,7 @@ import { ref } from 'vue';
 import { myMixin } from '@/store/mixin';
 import axiosInstance from '@/store/axiosInstance';
 import Config from '@/store/config';
+import { ValidationRules } from '@/store/utils';
 
 export default {
     mixins: [myMixin],
@@ -64,6 +65,7 @@ export default {
             selectedItem: null,
             showSuccessSnackbar: false,
             options: [{ name: 'Root category', id: null }],
+            textInputRules: [],
             breadcrumbs: []
         };
     },
@@ -71,6 +73,7 @@ export default {
         fetchCategory() {
             axiosInstance.get(Config.API_ENDPOINT + '/category/' + this.id)
                 .then(response => {
+                    console.log(response.data);
                     this.category = response.data;
                     this.textInput = this.category.name;
                     this.breadcrumbs = ['Category', 'Edit', this.category.name];
@@ -91,7 +94,7 @@ export default {
                 });
             })
             .catch(error => {
-                console.error('Error deleting category:', error);
+                console.log(error);
             });
         },
         async submitForm() {
@@ -116,15 +119,9 @@ export default {
     },
     created() {
         this.id = this.$route.params.id;
+        this.textInputRules = ValidationRules.textRule();
         this.fetchCategory();
         this.fetchData();
-    },
-    computed: {
-        textInputRules() {
-            return [
-                value => !!value.trim() || 'Name is required',
-            ];
-        }
     }
 };
 </script>
