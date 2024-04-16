@@ -60,17 +60,17 @@ const MainRoutes = {
                 {
                     name: 'InvoiceList',
                     path: '',
-                    component: () => import('@/views/pages/product/List.vue')
+                    component: () => import('@/views/pages/invoice/List.vue')
                 },
                 {
                     name: 'InvoiceAdd',
                     path: 'add',
-                    component: () => import('@/views/pages/product/Add.vue')
+                    component: () => import('@/views/pages/invoice/Add.vue')
                 },
                 {
                     name: 'InvoiceEdit',
                     path: ':id',
-                    component: () => import('@/views/pages/product/Edit.vue')
+                    component: () => import('@/views/pages/invoice/Edit.vue')
                 },
             ]
         },
