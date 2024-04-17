@@ -18,12 +18,8 @@ use App\Http\Controllers\UserController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 Route::post('/login', [UserController::class, 'login'])->middleware('validate.user');
-// Route::group(['middleware' => ['jwt.verify']], function() {
+Route::group(['middleware' => ['jwt.verify']], function() {
     Route::post('/info', [UserController::class, 'info']);
     Route::apiResource('category', CategoryController::class);
     Route::apiResource('product', ProductController::class);
@@ -33,4 +29,4 @@ Route::post('/login', [UserController::class, 'login'])->middleware('validate.us
     Route::post('/productDeleteAll', [ProductController::class, 'delete']);
     Route::get('/invoiceDetail/{id}', [InvoiceController::class, 'invoiceDetail']);
     Route::post('/invoiceDeleteAll', [InvoiceController::class, 'delete']);
-// });
+});
