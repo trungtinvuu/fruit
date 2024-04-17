@@ -220,23 +220,6 @@ export default {
 </script>
 
 <style >
-.custom-table table{
-  border: 1px solid #eee;
-}
-.custom-table header{
-  background: #fff;
-}
-.custom-table .v-data-table-footer {
-  padding: 10px 0px;
-  border: 1px #eee solid;
-  border-top: 0;
-}
-.custom-table .v-data-table__tr:nth-child(odd) {
-  background: #eee;
-}
-.custom-table .v-data-table__tr:nth-child(even) {
-  background: #fff;
-}
 .add-category{
   text-decoration: none;
 }

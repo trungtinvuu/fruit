@@ -25,6 +25,9 @@ export const myMixin = {
     displayIndex(index) {
       return index + 1;
     },
+    getPrice(price , quantity) {
+      return price * quantity;
+    },
     categoryList() {
       return new Promise((resolve, reject) => {
         const url = Config.API_ENDPOINT+'/category';

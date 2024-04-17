@@ -52,7 +52,7 @@ class InvoiceController extends Controller
             $this->invoiceRepository->attachProducts($invoice,$products);
 
             return response()->json($invoice);
-            
+
         } catch (\Illuminate\Validation\ValidationException $e) {
             \Log::error('Validation error: ', $e->errors());
             return response()->json($e->errors(), 422);
@@ -76,6 +76,10 @@ class InvoiceController extends Controller
         $products = [];
         if ($invoice) {
             $products = $invoice->products()->withPivot('quantity')->get();
+            foreach ($products as $product) {
+                $categoryName = $product->category->name;
+                $product->category_name = $categoryName;
+            }
         }
         return $products;
     }

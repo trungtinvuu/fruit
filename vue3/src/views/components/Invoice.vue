@@ -21,14 +21,14 @@
                 <th>Quantity</th>
                 <th>Amount</th>
             </tr>
-            <tr v-for="(item, index) in buy" >
+            <tr v-for="(item, index) in buy" class="set-row" >
                 <td>{{ displayIndex(index) }}</td>
-                <td>Apple</td>
-                <th>{{ item.name }}</th>
-                <th>{{ item.unit }}</th>
-                <th>{{ item.price }}</th>
-                <th>{{ item.pivot.quantity }}</th>
-                <th>{{ getPrice(item.price , item.pivot.quantity) }}</th>
+                <td>{{ item.category_name }}</td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.unit }}</td>
+                <td>{{ item.price }}</td>
+                <td>{{ item.pivot.quantity }}</td>
+                <td>{{ getPrice(item.price , item.pivot.quantity) }}</td>
             </tr>
             <tr>
                 <td></td>
@@ -37,7 +37,7 @@
                 <th></th>
                 <th></th>
                 <th>Total</th>
-                <th>50</th>
+                <th>{{ total }}</th>
             </tr>
         </table>
     </div>
@@ -55,18 +55,16 @@ export default {
         return {
             buy: [],
             invoice : {},
+            total: 0
         };
     },
     methods: {
-        getPrice(price , quantity) {
-            return price * quantity;
-        },
+
     },
     mounted() {
         this.invoiceInfo(this.id)
             .then(response => {
                 this.invoice = response.data;
-                console.log(this.invoice);
             })
             .catch(error => {
                 console.log(error);
@@ -75,7 +73,10 @@ export default {
         this.invoiceDetail(this.id)
             .then(response => {
                 this.buy = response.data;
-                console.log(this.buy);
+                this.buy.forEach(item => {
+                    let value = this.getPrice(item.price , item.pivot.quantity);
+                    this.total += value;
+                });
             })
             .catch(error => {
                 console.log(error);
@@ -98,6 +99,6 @@ th, td {
 }
 
 th {
-    background-color: #f2f2f2;
+    background: #fff;
 }
 </style>

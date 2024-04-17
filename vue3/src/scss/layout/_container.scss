@@ -7,6 +7,32 @@ html {
     margin-bottom: 15px;
     border-bottom: 1px #eee dashed;
 }
+.custom-table header{
+    background: #fff;
+}
+.custom-table .v-data-table-footer {
+    padding: 10px 0px;
+    border: 1px #eee solid;
+    border-top: 0;
+}
+.product-list th, .custom-table th,
+.product-list td, .custom-table td,
+.product-list tr, .custom-table tr{
+    border: 1px #ccc solid !important;
+}
+.custom-table thead {
+    background: #f2f2f2;
+}
+.custom-table table{
+    border: 1px solid #eee;
+    border-collapse: collapse;
+}
+.quantity{
+    padding: 5px;
+    width: 100px;
+    border: 1px #ccc solid;
+    border-radius: 5px;
+}
 .v-main {
     margin-right: 20px;
 }

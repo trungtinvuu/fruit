@@ -28,11 +28,11 @@
       :sort-by="[{ key: 'calories', order: 'asc' }]"
       :search="search"
       show-select
-      class="custom-table"
+      class="custom-table "
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title class="ml-0">List Product</v-toolbar-title>
+          <v-toolbar-title class="ml-0">List Invoice</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
@@ -219,23 +219,6 @@ export default {
 </script>
 
 <style >
-.custom-table table{
-  border: 1px solid #eee;
-}
-.custom-table header{
-  background: #fff;
-}
-.custom-table .v-data-table-footer {
-  padding: 10px 0px;
-  border: 1px #eee solid;
-  border-top: 0;
-}
-.custom-table .v-data-table__tr:nth-child(odd) {
-  background: #eee;
-}
-.custom-table .v-data-table__tr:nth-child(even) {
-  background: #fff;
-}
 .add-invoice{
   text-decoration: none;
 }

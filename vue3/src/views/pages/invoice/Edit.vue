@@ -81,10 +81,7 @@
             color="success"
             :timeout="1000"
         ><b>Edit successfully!</b></v-snackbar>
-
-        <Invoice :id="id" />
     </v-container>
-
     <Error404  v-else />
 </template>
 
@@ -192,15 +189,3 @@ export default {
     }
 };
 </script>
-
-<style>
-.product-list th, .product-list td{
-    border: 1px #eee solid;
-}
-.quantity{
-    padding: 5px;
-    width: 100px;
-    border: 1px #ccc solid;
-    border-radius: 5px;
-}
-</style>
