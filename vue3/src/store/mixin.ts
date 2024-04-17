@@ -22,6 +22,9 @@ export const myMixin = {
         return '';
       }
     },
+    displayIndex(index) {
+      return index + 1;
+    },
     categoryList() {
       return new Promise((resolve, reject) => {
         const url = Config.API_ENDPOINT+'/category';

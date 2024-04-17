@@ -81,7 +81,10 @@
             color="success"
             :timeout="1000"
         ><b>Edit successfully!</b></v-snackbar>
+
+        <Invoice :id="id" />
     </v-container>
+
     <Error404  v-else />
 </template>
 
@@ -92,10 +95,12 @@ import axiosInstance from '@/store/axiosInstance';
 import Config from '@/store/config';
 import { ValidationRules } from '@/store/utils';
 import Error404 from '@/views/pages/Error404.vue';
+import Invoice from "@/views/components/Invoice.vue";
 
 export default {
     components: {
-        Error404
+        Error404,
+        Invoice
     },
     mixins: [myMixin],
     data() {
@@ -113,9 +118,6 @@ export default {
         };
     },
     methods: {
-        displayIndex(index) {
-            return index + 1;
-        },
         itemProps(item) {
             return {
                 title: item.name,
