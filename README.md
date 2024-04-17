@@ -22,6 +22,6 @@
 2. Cd `npm install`.
 3. Cd `npm run dev`.
    - work : [http://localhost:3000](http://localhost:3000).
-   - 
+* demo : http://localhost:3000
 ==> demo : http://localhost:3000
 login : staff@fruit.com - demo@1234
