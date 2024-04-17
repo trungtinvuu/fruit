@@ -1,4 +1,4 @@
-# fruit
+# Fruit shop
 
 ## I. mysql 8
 - DB_CONNECTION=mysql
@@ -22,5 +22,3 @@
 2. Chạy lệnh `npm install`.
 3. Chạy lệnh `npm run dev`.
    - Truy cập vào đường dẫn: [http://localhost:3000](http://localhost:3000).
-
-*Hướng dẫn viết code để xem trước (preview) sẽ được định dạng xuống dòng.*
