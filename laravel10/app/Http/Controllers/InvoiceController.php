@@ -37,16 +37,30 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'customer_name' => 'required|string',
-        ]);
+        $customerName = $request->customer_name;
+        $products = $request->products;
 
-        $invoice = Invoice::create($validatedData);
-        $product = Product::find(1);
+        try {
+            $validatedData = $request->validate([
+                'customer_name' => 'required|string',
+            ]);
+    
+            $invoice = Invoice::create($validatedData);
+    
+            foreach ($products as $arr) {
+                $quantity = $arr["quantity"];
+                $product = Product::find($arr["id"]);
+                $this->invoiceRepository->attachProduct($invoice,$product,$quantity);
+            }
 
-        $this->invoiceRepository->attachProduct($invoice,$product);
-
-        return response()->json($invoice);
+            return response()->json($invoice);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Validation error: ', $e->errors());
+            return response()->json($e->errors(), 422);
+        } catch (\Exception $e) {
+            \Log::error('Unhandled exception: ', ['message' => $e->getMessage()]);
+            return response()->json(['error' => 'An unexpected error occurred'], 500);
+        }
     }
 
     /**

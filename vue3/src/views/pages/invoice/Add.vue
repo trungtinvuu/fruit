@@ -112,9 +112,6 @@ export default {
                 subtitle: item.unit + " - " + item.price,
             }
         },
-        updateQuantity(event, index) {
-            this.select[index].quantity = parseInt(event.target.value);
-        },
         async submitForm() {
             const { valid } = await this.$refs.form.validate();
             if(valid){
@@ -122,7 +119,14 @@ export default {
                     customer_name : this.textInput.trim(),
                     products : this.select,
                 };
-                console.log(data);
+                axiosInstance.post(Config.API_ENDPOINT + '/invoice' , data)
+                    .then(response => {
+                        this.$refs.form.reset();
+                        this.showSuccessSnackbar = true;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
             }
         }
     },
@@ -152,7 +156,7 @@ export default {
 }
 .quantity{
     padding: 5px;
-    width: 50px;
+    width: 100px;
     border: 1px #ccc solid;
     border-radius: 5px;
 }
