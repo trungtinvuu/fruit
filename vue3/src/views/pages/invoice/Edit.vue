@@ -72,7 +72,7 @@
             </v-row>
             <v-row>
                 <v-col cols="12" >
-                    <v-btn type="submit" color="primary">Add invoice</v-btn>
+                    <v-btn type="submit" color="primary">Edit invoice</v-btn>
                 </v-col>
             </v-row>
         </v-form>
@@ -80,7 +80,7 @@
             v-model="showSuccessSnackbar" 
             color="success"
             :timeout="1000"
-        ><b>Add successfully!</b></v-snackbar>
+        ><b>Edit successfully!</b></v-snackbar>
     </v-container>
     <Error404  v-else />
 </template>
@@ -123,9 +123,20 @@ export default {
             }
         },
         async fetchData() {
+            this.invoiceInfo(this.id)
+                .then(response => {
+                    this.invoice = response.data;
+                    this.textInput = this.invoice.customer_name;
+                })
+                .catch(error => {
+                    if(error.response.status===404){
+                        this.load = !this.load
+                    }
+                });
+            
             const response = await this.invoiceDetail(this.id);
             this.buy = response.data;
-            console.log(this.buy);
+
             this.productList()
                 .then(response => {
                     const data = response.data;
@@ -159,10 +170,11 @@ export default {
                     customer_name : this.textInput.trim(),
                     products : this.select,
                 };
-                axiosInstance.post(Config.API_ENDPOINT + '/invoice' , data)
+                axiosInstance.put(Config.API_ENDPOINT + '/invoice/' + this.id, data)
                     .then(response => {
                         this.$refs.form.reset();
                         this.showSuccessSnackbar = true;
+                        this.fetchData();
                     })
                     .catch(error => {
                         console.log(error);
@@ -174,16 +186,6 @@ export default {
         this.id = this.$route.params.id;
         this.breadcrumbs = ['Invoice', 'Edit', this.id];
         this.ruleText = ValidationRules.textRule();
-        this.invoiceInfo(this.id)
-                .then(response => {
-                    this.invoice = response.data;
-                    this.textInput = this.invoice.customer_name;
-                })
-                .catch(error => {
-                    if(error.response.status===404){
-                        this.load = !this.load
-                    }
-                });
         this.fetchData();
     }
 };

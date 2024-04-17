@@ -46,12 +46,7 @@ class InvoiceController extends Controller
             ]);
     
             $invoice = Invoice::create($validatedData);
-    
-            foreach ($products as $arr) {
-                $quantity = $arr["quantity"];
-                $product = Product::find($arr["id"]);
-                $this->invoiceRepository->attachProduct($invoice,$product,$quantity);
-            }
+            $this->invoiceRepository->attachProducts($invoice,$products);
 
             return response()->json($invoice);
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -93,7 +88,10 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, Invoice $invoice)
     {
-        //
+        $customerName = $request->customer_name;
+        $invoice->update(['customer_name' => $customerName]);
+        $products = $request->products;
+        $this->invoiceRepository->syncProducts($invoice,$products);
     }
 
     /**
@@ -101,6 +99,7 @@ class InvoiceController extends Controller
      */
     public function destroy(Invoice $invoice)
     {
-        //
+        $invoice->products()->detach();
+        $invoice->delete();
     }
 }
