@@ -95,6 +95,9 @@
         </v-toolbar>
       </template>
       <template v-slot:item.actions="{ item }">
+        <v-icon size="small" @click="invoice(item.id)"  style="color: #ff0000;" >
+          mdi-printer
+        </v-icon>
         <router-link :to="`/invoice/${item.id}`">
             <v-icon size="small" >
                 mdi-pencil
@@ -157,7 +160,9 @@ export default {
   },
 
   methods: {
-
+    invoice(value){
+      alert(value);
+    },
     async initialize() {
         const response = await this.invoiceList();
         this.products = response.data;
