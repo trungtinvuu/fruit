@@ -15,11 +15,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = DB::table('products_view')
-                        ->whereNull('deleted_at')
-                        ->orderBy('id', 'desc')
-                        ->get();
-        return response()->json($products);
+        $products = Product::orderBy('created_at', 'desc')->get();
+        return response()->json(ProductResource::collection($products));
     }
 
     /**
@@ -35,16 +32,26 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string',
-            'unit' => 'required|string',
-            'price' => 'required|numeric',
-        ]);
+        try {
 
-        $product = Product::create($validatedData);
-
-        return response()->json($product);
+            $validatedData = $request->validate([
+                'category_id' => 'required|exists:categories,id',
+                'name' => 'required|string',
+                'unit' => 'required|string',
+                'price' => 'required|numeric',
+            ]);
+     
+            $product = Product::create($validatedData);
+    
+            return response()->json($product);
+            
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Validation error: ', $e->errors());
+            return response()->json($e->errors(), 422);
+        } catch (\Exception $e) {
+            \Log::error('Unhandled exception: ', ['message' => $e->getMessage()]);
+            return response()->json(['error' => 'An unexpected error occurred'], 500);
+        }
     }
 
     /**
@@ -68,16 +75,26 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $validatedData = $request->validate([
-            'category_id' => 'required|exists:categories,id',
-            'name' => 'required|string|max:255',
-            'unit' => 'required|string|max:255',
-            'price' => 'required|numeric',
-        ]);
+        try {
 
-        $product->update($validatedData);
+            $validatedData = $request->validate([
+                'category_id' => 'required|exists:categories,id',
+                'name' => 'required|string',
+                'unit' => 'required|string',
+                'price' => 'required|numeric',
+            ]);
 
-        return response()->json($product);
+            $product->update($validatedData);
+
+            return response()->json($product);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Validation error: ', $e->errors());
+            return response()->json($e->errors(), 422);
+        } catch (\Exception $e) {
+            \Log::error('Unhandled exception: ', ['message' => $e->getMessage()]);
+            return response()->json(['error' => 'An unexpected error occurred'], 500);
+        }
     }
 
     /**

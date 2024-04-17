@@ -43,6 +43,7 @@ class InvoiceController extends Controller
         $products = $request->products;
 
         try {
+
             $validatedData = $request->validate([
                 'customer_name' => 'required|string',
             ]);
@@ -51,6 +52,7 @@ class InvoiceController extends Controller
             $this->invoiceRepository->attachProducts($invoice,$products);
 
             return response()->json($invoice);
+            
         } catch (\Illuminate\Validation\ValidationException $e) {
             \Log::error('Validation error: ', $e->errors());
             return response()->json($e->errors(), 422);

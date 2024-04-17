@@ -124,7 +124,7 @@ export default {
       { title: 'Name', align: 'start', sortable: false, key: 'name' },
       { title: 'Unit', key: 'unit' },
       { title: 'Price', key: 'price' },
-      { title: 'Category', key: 'category' },
+      { title: 'Category', key: 'category_name' },
       { title: 'Actions', key: 'actions', sortable: false },
     ],
     products: [],
