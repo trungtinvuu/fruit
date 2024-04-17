@@ -72,9 +72,12 @@ export default {
                 const invoiceDetailResponse = await this.invoiceDetail(this.id);
                 this.buy = invoiceDetailResponse.data;
 
+
                 this.total = this.buy.reduce((acc, item) => {
                     return acc + this.getPrice(item.price, item.pivot.quantity);
                 }, 0);
+                
+                this.total = this.total.toFixed(2);
             } catch (error) {
                 console.log(error);
             }

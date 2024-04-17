@@ -103,9 +103,22 @@ export default {
         };
     },
     methods: {
-        displayIndex(index) {
-            return index + 1;
-        },
+        getListProduct() {
+            this.productList()
+                .then(response => {
+                    const data = response.data;
+                    this.fruits = data.map(item => ({
+                        id: item.id,
+                        name: item.name,
+                        unit: item.unit,
+                        price: item.price,
+                        quantity: 1
+                    }));
+                })
+                .catch(error => {
+                    console.log(error)
+                });
+        }, 
         itemProps(item) {
             return {
                 title: item.name,
@@ -123,6 +136,7 @@ export default {
                     .then(response => {
                         this.$refs.form.reset();
                         this.showSuccessSnackbar = true;
+                        this.getListProduct();
                     })
                     .catch(error => {
                         console.log(error);
@@ -132,20 +146,21 @@ export default {
     },
     created() {
         this.ruleText = ValidationRules.textRule();
-        this.productList()
-                .then(response => {
-                    const data = response.data;
-                    this.fruits = data.map(item => ({
-                        id: item.id,
-                        name: item.name,
-                        unit: item.unit,
-                        price: item.price,
-                        quantity: 1
-                    }));
-                })
-                .catch(error => {
-                    console.log(error)
-                });
+        this.getListProduct();
+        // this.productList()
+        //         .then(response => {
+        //             const data = response.data;
+        //             this.fruits = data.map(item => ({
+        //                 id: item.id,
+        //                 name: item.name,
+        //                 unit: item.unit,
+        //                 price: item.price,
+        //                 quantity: 1
+        //             }));
+        //         })
+        //         .catch(error => {
+        //             console.log(error)
+        //         });
     }
 };
 </script>
