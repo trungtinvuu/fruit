@@ -8,9 +8,13 @@ use Illuminate\Support\Facades\Log;
 
 class InvoiceRepository
 {
-    public function attachProduct(Invoice $invoice, Product $product, $quantity)
+    public function deleteInvoice(array $list)
     {
-        $invoice->products()->attach($product,['quantity' => $quantity]);
+        foreach ($list as $value) {
+            $invoice = Invoice::find($value);
+            $invoice->products()->detach();
+            $invoice->delete();
+        }
     }
 
     public function attachProducts(Invoice $invoice, array $products)

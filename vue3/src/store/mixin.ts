@@ -94,5 +94,17 @@ export const myMixin = {
           });
       });
     },
+    invoiceList(){
+      return new Promise((resolve, reject) => {
+        const url = Config.API_ENDPOINT+'/invoice';
+        axiosInstance.get(url)
+          .then(response => {
+            resolve(response);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    },
   }
 };

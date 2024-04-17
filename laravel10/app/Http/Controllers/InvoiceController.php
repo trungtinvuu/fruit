@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Repositories\InvoiceRepository;
 use App\Models\Product;
+use App\Http\Resources\InvoiceResource;
 
 class InvoiceController extends Controller
 {
@@ -21,7 +22,8 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        //
+        $invoices = Invoice::orderBy('created_at', 'desc')->get();
+        return response()->json(InvoiceResource::collection($invoices));
     }
 
     /**
@@ -101,5 +103,11 @@ class InvoiceController extends Controller
     {
         $invoice->products()->detach();
         $invoice->delete();
+    }
+
+    public function delete(Request $request)
+    {
+        $list = $request->list;
+        $this->invoiceRepository->deleteInvoice($list);
     }
 }

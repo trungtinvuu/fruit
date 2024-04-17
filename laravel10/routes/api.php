@@ -32,4 +32,5 @@ Route::post('/login', [UserController::class, 'login'])->middleware('validate.us
     Route::get('/categoryDetail/{id}', [CategoryController::class, 'categoryDetail']);
     Route::post('/productDeleteAll', [ProductController::class, 'delete']);
     Route::get('/invoiceDetail/{id}', [InvoiceController::class, 'invoiceDetail']);
+    Route::post('/invoiceDeleteAll', [InvoiceController::class, 'delete']);
 // });
