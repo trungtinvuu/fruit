@@ -11,7 +11,7 @@
 *Please create database in MySQL and update Laravel env file.*
 
 ## II. laravel10
-1. Cd `laravel`.
+1. Cd `laravel10`.
 2. Run `composer install`.
 3. Run `php artisan reset:clear`.
 4. Run `php artisan serve`.
