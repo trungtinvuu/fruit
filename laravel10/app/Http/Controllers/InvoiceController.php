@@ -68,9 +68,18 @@ class InvoiceController extends Controller
      */
     public function show(Invoice $invoice)
     {
-        //
+        return response()->json($invoice);
     }
 
+    public function invoiceDetail($id)
+    {
+        $invoice = Invoice::find($id);
+        $products = [];
+        if ($invoice) {
+            $products = $invoice->products()->withPivot('quantity')->get();
+        }
+        return $products;
+    }
     /**
      * Show the form for editing the specified resource.
      */

@@ -70,5 +70,29 @@ export const myMixin = {
           });
       });
     },
+    invoiceInfo(id : any) {
+      return new Promise((resolve, reject) => {
+        const url = Config.API_ENDPOINT+'/invoice/'+id;
+        axiosInstance.get(url)
+          .then(response => {
+            resolve(response);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    },
+    invoiceDetail(id : any) {
+      return new Promise((resolve, reject) => {
+        const url = Config.API_ENDPOINT+'/invoiceDetail/'+id;
+        axiosInstance.get(url)
+          .then(response => {
+            resolve(response);
+          })
+          .catch(error => {
+            reject(error);
+          });
+      });
+    },
   }
 };
