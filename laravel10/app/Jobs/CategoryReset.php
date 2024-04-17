@@ -27,7 +27,6 @@ class CategoryReset implements ShouldQueue
      */
     public function handle(): void
     {
-        Log::info($this->category);
         resetCategory($this->category);
     }
 }

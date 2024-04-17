@@ -22,10 +22,10 @@ export const myMixin = {
         return '';
       }
     },
-    displayIndex(index) {
+    displayIndex(index: number) {
       return index + 1;
     },
-    getPrice(price , quantity) {
+    getPrice(price: number , quantity: number) {
       return price * quantity;
     },
     categoryList() {

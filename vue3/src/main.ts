@@ -10,6 +10,7 @@ import store from './store';
 import { router } from '@/router';
 
 const app = createApp(App);
+app.config.warnHandler = () => {};
 app.use(router);
 app.use(PerfectScrollbar);
 app.use(VueTablerIcons);
